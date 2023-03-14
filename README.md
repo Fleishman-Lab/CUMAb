@@ -16,6 +16,6 @@ You will need to either have Rosetta installed or install it from http://www.ros
 You need to install the CUMAb conda environment. To do so, run:
 
 ```
-conda create --name CUMAb --file CUMAb_spec.txt
+conda create --name CUMAb --file CUMAb_env.txt
 conda activate CUMAb
 ```
