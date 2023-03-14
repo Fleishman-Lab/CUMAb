@@ -13,7 +13,7 @@ You will need to either have Rosetta installed or install it from http://www.ros
   - IGLV: https://www.imgt.org/genedb/GENElect?query=7.6+IGLV&species=Homo+sapiens
   - IGLJ: https://www.imgt.org/genedb/GENElect?query=7.6+IGLJ&species=Homo+sapiens
 <br>
-<br> You need to install the CUMAb conda environment. To do so, run:
+You need to install the CUMAb conda environment. To do so, run:
 ```
 conda create --name CUMAb --file CUMAb_spec.txt
 conda activate CUMAb
