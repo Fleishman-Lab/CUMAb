@@ -11,4 +11,4 @@ You will need to either have Rosetta installed or install it from http://www.ros
   - IGKV: https://www.imgt.org/genedb/GENElect?query=7.6+IGKV&species=Homo+sapiens
   - IGKJ: https://www.imgt.org/genedb/GENElect?query=7.6+IGKJ&species=Homo+sapiens
   - IGLV: https://www.imgt.org/genedb/GENElect?query=7.6+IGLV&species=Homo+sapiens
-   -IGLJ: https://www.imgt.org/genedb/GENElect?query=7.6+IGLJ&species=Homo+sapiens
+  - IGLJ: https://www.imgt.org/genedb/GENElect?query=7.6+IGLJ&species=Homo+sapiens
