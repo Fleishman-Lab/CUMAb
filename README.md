@@ -6,8 +6,8 @@ You will need to either have Rosetta installed or install it from http://www.ros
 <br>
 <br>You will need to download the IMGT databases of antibody germline sequences. Please save them under a folder called "IMGT_databases" in 6 separate files ("IGHV.fasta", "IGHJ.fasta", "IGKV.fasta", "IGKJ.fasta", "IGLJ.fasta", "IGKJ.fasta"). 
 <br>They are available from the following urls:
-  - [IGHV]([url](https://www.imgt.org/genedb/GENElect?query=7.6+IGHV&species=Homo+sapiens))
-  - [IGHJ]([url](https://www.imgt.org/genedb/GENElect?query=7.6+IGHJ&species=Homo+sapiens))
+  - [IGHV](https://www.imgt.org/genedb/GENElect?query=7.6+IGHV&species=Homo+sapiens)
+  - [IGHJ](https://www.imgt.org/genedb/GENElect?query=7.6+IGHJ&species=Homo+sapiens)
   - [IGKV](https://www.imgt.org/genedb/GENElect?query=7.6+IGKV&species=Homo+sapiens)
   - [IGKJ](https://www.imgt.org/genedb/GENElect?query=7.6+IGKJ&species=Homo+sapiens)
   - [IGLV](https://www.imgt.org/genedb/GENElect?query=7.6+IGLV&species=Homo+sapiens)
