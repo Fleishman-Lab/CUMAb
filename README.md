@@ -29,7 +29,7 @@ conda activate CUMAb
 - Place the pdb file of the antibody you wish to humanize in this directory
 - Run the following command:
 ```
-python {path_to_CUMAb_dir}/CUMAb_pdb_format.py
+python {path_to_CUMAb_dir}/CUMAb_pdb_format.py -pdb_file {path_to_PDB_file}
 ```
 
 ### Step 1b: Finding residues in antibody-antigen interface
