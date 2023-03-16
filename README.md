@@ -33,7 +33,7 @@ python {path_to_CUMAb_dir}/CUMAb_pdb_format.py -pdb_file {path_to_PDB_file}
 ```
 - Arguments:
   - -pdb_file: Required. Path to pdb file of antibody you want to humanize. This should be the only thing in the new directory you made for the CUMAb run
-  - -mode: Not required. Do you want to graft the sequences of the entire CDRs (CUMAb definition) or only SDRs? Default is CDR and the other option is SDR
+  - -mode: Not required. Do you want to graft the sequences of the entire CDRs (CUMAb definition) or only SDRs? If you want to use SDR grafting, antigen chain must be provied in the pdb and as an argument here. Default is CDR and the other option is SDR
   - -antigen_chain: Not required. Does your pdb contain the antigen as well? Must be a single letter corresponding to the chain of the antigen in the pdb file. Default is none
   - -screens: Not required. Space separated list of regular expressions that sequences will be exlcuded if they contain outside of the CDRs. Default is NG N[^P][ST]
   - -origin_species: Not required. What species does your antibody originate from? Options are human, mouse, or rabbit. Human and mouse are treated the same whereas rabbit has some slight differences. Default is mouse
