@@ -32,6 +32,13 @@ conda activate CUMAb
 python {path_to_CUMAb_dir}/CUMAb_pdb_format.py
 ```
 
+### Step 1b: Finding residues in antibody-antigen interface
+- **Do not run if your pdb file does not contain an antigen**
+- If your pdb file also contains the antigen of interest, run the following command to find residues in the antibody-antigen interface:
+```
+{rosetta_exec} -s {CUMAb_formatted_pdb} -parser:protocol {CUMAb_dir}/xmls/interface_residues_twochains.xml -overwrite | grep protocols.protein_interface_design.filters.DesignableResiduesFilter > interface_residues.txt 
+```
+
 ### Step 2: Creating humanized sequences
 From the same directory, fun the following command:
 ```
