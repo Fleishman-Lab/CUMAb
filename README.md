@@ -31,6 +31,8 @@ conda activate CUMAb
 ```
 python {path_to_CUMAb_dir}/CUMAb_pdb_format.py -pdb_file {path_to_PDB_file}
 ```
+- Arguments:
+-- aaa
 
 ### Step 1b: Finding residues in antibody-antigen interface
 - **Do not run if your pdb file does not contain an antigen**
