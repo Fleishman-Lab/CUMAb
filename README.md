@@ -37,7 +37,7 @@ python {path_to_CUMAb_dir}/CUMAb_pdb_format.py -pdb_file {path_to_PDB_file}
   - -antigen_chain: Not required. Does your pdb contain the antigen as well? Must be a single letter corresponding to the chain of the antigen in the pdb file. Default is none
   - -screens: Not required. Space separated list of regular expressions that sequences will be exlcuded if they contain outside of the CDRs. Default is NG N[^P][ST]
   - -origin_species: Not required. What species does your antibody originate from? Options are human, mouse, or rabbit. Human and mouse are treated the same whereas rabbit has some slight differences. Default is mouse
-  - -res_to_fix: Space separated list of residues which should be kept the same identity as in the parental antibody. Must be formatted as residue number followed by either L or H for light or heavy chain. Residue number must be numbered from start of pdb with no gaps.
+  - -res_to_fix: Not required. Space separated list of residues which should be kept the same identity as in the parental antibody. Must be formatted as residue number followed by either L or H for light or heavy chain. Residue number must be numbered from start of pdb with no gaps.
 
 ### Step 1b: Finding residues in antibody-antigen interface
 - **Do not run if your pdb file does not contain an antigen**
