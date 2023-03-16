@@ -19,6 +19,7 @@ You need to install the CUMAb conda environment. To do so, run:
 conda create --name CUMAb --file CUMAb_env.txt
 conda activate CUMAb
 ```
+
 ##Running CUMAb
 CUMAb takes as an input only a pdb file of the antibody you wish to humanize
 
