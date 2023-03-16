@@ -21,12 +21,13 @@ conda activate CUMAb
 ```
 
 ## Running CUMAb
-CUMAb takes as an input only a pdb file of the antibody you wish to humanize
+- CUMAb takes as an input only a pdb file of the antibody you wish to humanize
+- The final output will be a pdb file formatted as necessary for CUMAb, a csv file containing the humanized sequences, and an example command line to run
 
 ### Step 1: Formatting the pdb file
--Create a new directory and move to that directory
--Place the pdb file of the antibody you wish to humanize in this directory
--Run the following command:
+- Create a new directory and move to that directory
+- Place the pdb file of the antibody you wish to humanize in this directory
+- Run the following command:
 ```
 python {path_to_CUMAb_dir}/CUMAb_pdb_format.py
 ```
