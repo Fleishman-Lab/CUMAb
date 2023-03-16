@@ -31,3 +31,10 @@ conda activate CUMAb
 ```
 python {path_to_CUMAb_dir}/CUMAb_pdb_format.py
 ```
+
+### Step 2: Creating humanized sequences
+From the same directory, fun the following command:
+```
+python {path_to_CUMAb_dir}/CUMAb_graft_CDRs.py
+```
+
