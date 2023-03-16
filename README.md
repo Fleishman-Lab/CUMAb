@@ -1,5 +1,5 @@
 # CUMAb
-Scripts and xmls needed to run the CUMAb tool for antibody humanization as described inour manuscript on BioRxiv ([Link to BioRxiv] (https://www.biorxiv.org/content/10.1101/2022.08.14.503891v3). Please note that we also provide CUMAb as a webserver free to academics (www.CUMAb.weizmann.ac.il) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences and a command line for running each of them that CUMAb would use; however, it is up to the user to decide how to run these command lines efficiently. 
+Scripts and xmls needed to run the CUMAb tool for antibody humanization as described inour manuscript on BioRxiv [Link to BioRxiv] (https://www.biorxiv.org/content/10.1101/2022.08.14.503891v3). Please note that we also provide CUMAb as a webserver free to academics (www.CUMAb.weizmann.ac.il) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences and a command line for running each of them that CUMAb would use; however, it is up to the user to decide how to run these command lines efficiently. 
 
 ## Installation
 You will need to either have Rosetta installed or install it from http://www.rosettacommons.org. CUMAb uses git version d9d4d5dd3fd516db1ad41b302d147ca0ccd78abd
