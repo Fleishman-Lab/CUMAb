@@ -2,7 +2,9 @@
 Scripts and xmls needed to run the CUMAb tool for antibody humanization as described in our manuscript on BioRxix ([Link to BioRxiv](https://www.biorxiv.org/content/10.1101/2022.08.14.503891v3)). Please note that we also provide CUMAb as a webserver free to academics (www.CUMAb.weizmann.ac.il) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences and a command line for running each of them that CUMAb would use; however, it is up to the user to decide how to run these command lines efficiently. 
 
 ## Citations
-Please cite our BioRxiv manuscript as well as IMGT (Giudicelli, V., Chaume, D. & Lefranc, M.-P. IMGT/GENE-DB: a comprehensive database for human and mouse immunoglobulin and T cell receptor genes. Nucleic Acids Res. 33, D256–61 (2005).)
+Please cite our BioRxiv manuscript as well as IMGT 
+- Giudicelli, V., Chaume, D. & Lefranc, M.-P. IMGT/GENE-DB: a comprehensive database for human and mouse immunoglobulin and T cell receptor genes. Nucleic Acids Res. 33, D256–61 (2005).
+- Tennenhouse, A.; Khmelnitsky, L.; Khalaila, R.; Yeshaya, N.; Noronha, A.; Lindzen, M.; Makowski, E.; Zaretsky, I.; Sirkis, Y. F.; Galon-Wolfenson, Y.; Tessier, P.; Abramson, J.; Yarden, Y.; Fass, D.; Fleishman, S. J. Reliable Energy-Based Antibody Humanization and Stabilization. bioRxiv, 2022, 2022.08.14.503891. https://doi.org/10.1101/2022.08.14.503891.
 
 ## Installation
 You will need to either have Rosetta installed or install it from http://www.rosettacommons.org. CUMAb uses git version d9d4d5dd3fd516db1ad41b302d147ca0ccd78abd
