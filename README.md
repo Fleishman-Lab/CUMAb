@@ -27,7 +27,7 @@ conda activate CUMAb
 
 ## Running CUMAb
 - CUMAb takes as an input only a pdb file of the antibody you wish to humanize
-- The final output will be a pdb file formatted as necessary for CUMAb, a csv file containing the humanized sequences, and an example command line to run
+- The final output will be a pdb file formatted as necessary for CUMAb, a csv file containing the humanized sequences, and example command lines to run the initial relax on the pdb as well as the threading of the humanized sequences. Please note that in our protocol for CUMAb we run the initial relax 15 times and take the lowest scoring one to use for the threading. 
 
 ### Step 1: Formatting the pdb file
 - Create a new directory and move to that directory
