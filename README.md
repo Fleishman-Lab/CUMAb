@@ -48,7 +48,7 @@ python {path_to_CUMAb_dir}/CUMAb_pdb_format.py -pdb_file {path_to_PDB_file}
 - **Do not run if your pdb file does not contain an antigen**
 - If your pdb file also contains the antigen of interest, run the following command to find residues in the antibody-antigen interface:
 ```
-{rosetta_exec} -database {rosetta_database} -s {CUMAb_formatted_pdb} -parser:protocol {path_to_CUMAb_dir}/xmls/interface_residues_twochains.xml -overwrite | grep protocols.protein_interface_design.filters.DesignableResiduesFilter > interface_residues.txt 
+{rosetta_exec} -database {rosetta_database} -s {CUMAb_formatted_pdb} -parser:protocol {path_to_CUMAb_dir}/xmls/Interface.xml -overwrite | grep protocols.protein_interface_design.filters.DesignableResiduesFilter > interface_residues.txt 
 ```
 
 ### Step 2: Creating humanized sequences
