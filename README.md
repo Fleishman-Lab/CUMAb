@@ -50,8 +50,10 @@ python {path_to_CUMAb_dir}/CUMAb_pdb_format.py -pdb_file {path_to_PDB_file}
 ```
 {path_to_rosetta_exec} -database {path_to_rosetta_database} -s {CUMAb_formatted_pdb} -parser:protocol {path_to_CUMAb_dir}/xmls/Interface.xml -overwrite | grep protocols.protein_interface_design.filters.DesignableResiduesFilter > interface_residues.txt 
 ```
+### Step 2: Relax input pdb
+In step 1, you should have generated an example command line for relaxing the pdb (relax_command_line_example). Please note that in CUMAb we run 15 parallel relaxes and take the lowest-scoring one. 
 
-### Step 2: Creating humanized sequences
+### Step 3: Creating humanized sequences
 From the same directory, fun the following command:
 ```
 python {path_to_CUMAb_dir}/CUMAb_graft_sequences.py
