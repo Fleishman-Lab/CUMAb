@@ -22,7 +22,7 @@ def parse_arguments():
     if not screens:
         screens = ["NG", "N[^P][ST]"]
     if mode == "SDR":
-        assert antigen_chain, "SDR mode requires an antigen chain to be given"
+        assert antigen_chain != "none", "SDR mode requires an antigen chain to be given"
     return  pdb_file, mode, antigen_chain, screens, origin_species, res_to_fix
 
 def write_config_JSON(mode: str, antigen_chain: str, 
