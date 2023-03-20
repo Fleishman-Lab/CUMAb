@@ -100,7 +100,7 @@ def extract_variable_region(pdb: str) -> None:
         f.write(f"{heavy_coords[0]} {heavy_coords[1]}\n")
 
 def cut_pdb(pdb: str, antigen_chain: str) -> None:
-    cut_pdb_command = f"pymol -cq {CUMAb_dir}/scripts/pdbcutter.py -- {pdb}"
+    cut_pdb_command = f"pymol -cqQ {CUMAb_dir}/scripts/pdbcutter.py -- {pdb}"
     cut_pdb_command += f" pdb_adjusting/variable_coords.txt {antigen_chain}"
     os.system(cut_pdb_command)
 
