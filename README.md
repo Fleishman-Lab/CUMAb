@@ -1,5 +1,5 @@
 # CUMAb
-Scripts and xmls needed to run the CUMAb tool for antibody humanization as described in our manuscript on BioRxix ([Link to BioRxiv](https://www.biorxiv.org/content/10.1101/2022.08.14.503891v3)). Please note that we also provide CUMAb as a webserver free to academics (www.CUMAb.weizmann.ac.il) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences and a command line for running each of them that CUMAb would use; however, it is up to the user to decide how to run these command lines efficiently. Questions, comments, and suggestions can be sent to ariel.tennenhouse@weizmann.ac.il.
+This repository contains the scripts and xmls needed to run the CUMAb tool for antibody humanization locally. The method is described in detail in our manuscript on BioRxix ([Link to BioRxiv](https://www.biorxiv.org/content/10.1101/2022.08.14.503891v3)). Please note that we also provide CUMAb as a webserver free to academics (www.CUMAb.weizmann.ac.il) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences that CUMAb uses and provides an example command line to run the Rosetta calculations; however, it is up to the user to decide how to run the command line for each humanized sequence efficiently. Questions, comments, and suggestions can be sent to ariel.tennenhouse@weizmann.ac.il.
 
 ## Citations
 Please cite our BioRxiv manuscript as well as IMGT 
@@ -27,7 +27,10 @@ conda activate CUMAb
 
 ## Running CUMAb
 - CUMAb takes as an input only a pdb file of the antibody you wish to humanize
-- The final output will be a pdb file formatted as necessary for CUMAb, a csv file containing the humanized sequences, and example command lines to run the initial relax on the pdb as well as the threading of the humanized sequences. Please note that in our protocol for CUMAb we run the initial relax 15 times and take the lowest scoring one to use for the threading. 
+- The final output includes:
+-- a pdb file formatted as necessary for CUMAb
+-- a csv file containing the humanized sequences
+-- example command lines to run the initial relax on the pdb as well as the threading of the humanized sequences
 
 ### Step 1: Formatting the pdb file
 - Create a new directory and move to that directory
