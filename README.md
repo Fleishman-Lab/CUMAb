@@ -27,6 +27,7 @@ conda activate CUMAb
 
 ## Running CUMAb
 - CUMAb takes as an input only a pdb file of the antibody you wish to humanize
+  - If you do not have a structure of the antibody, we reccomend to use [ABodyBuilder2](https://opig.stats.ox.ac.uk/webapps/newsabdab/sabpred/abodybuilder2/) to predict the structure
 - The final output includes:
   - a pdb file formatted as necessary for CUMAb
   - a csv file containing the humanized sequences
@@ -59,8 +60,8 @@ From the same directory, fun the following command:
 python {path_to_CUMAb_dir}/CUMAb_graft_sequences.py
 ```
 
-### Step 3: Relax pdb
+### Step 3: Relax structure of parental antibody
 We reccomend to relax the starting pdb structure before threading the humanized sequences onto it. An example command line for running the relax was created under the file name "relax_command_line_example". Please note that in our protocol for CUMAb we run the initial relax 15 times and take the lowest scoring one to use for the threading. 
 
-### Step 4: Threading humanized sequences onto pdb
+### Step 4: Threading humanized sequences onto structure of parental antibody
 An example command line for running the threading can be found under the file name "thread_command_example". You will need to run this command for each of the humanized sequences created in part 2. 
