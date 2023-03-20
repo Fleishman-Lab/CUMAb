@@ -186,7 +186,7 @@ def adjust_seq(type:str, mouse_seq:str, humanized_seq:str) -> str:
 
 def find_interface_locs(antigen_chain: str) -> str:
     interface_locs = ""
-    if antigen_chain == None:
+    if antigen_chain == "none":
         return interface_locs
     else:
         with open(f"interface_residues.txt") as f:
