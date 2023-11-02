@@ -1,5 +1,7 @@
 # CUMAb
-This repository contains the scripts and xmls needed to run the CUMAb tool for antibody humanization locally. The method is described in detail in our paper published in Nature Biomedical Engineering ([Link to paper](https://rdcu.be/diKmJ)). Please note that we also provide CUMAb as a webserver free to academics (www.CUMAb.weizmann.ac.il) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences that CUMAb uses and provides an example command line to run the Rosetta calculations; however, it is up to the user to decide how to run the command line for each humanized sequence efficiently. Questions, comments, and suggestions can be sent to ariel.tennenhouse@weizmann.ac.il. Licensed under the Non-Profit Open Software License version 3.0.
+Licensed under the Non-Profit Open Software License version 3.0.
+
+This repository contains the scripts and xmls needed to run the CUMAb tool for antibody humanization locally. The method is described in detail in our paper published in Nature Biomedical Engineering ([Link to paper](https://rdcu.be/diKmJ)). Please note that we also provide CUMAb as a webserver free to academics (CUMAb.weizmann.ac.il) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences that CUMAb uses and provides an example command line to run the Rosetta calculations; however, it is up to the user to decide how to run the command line for each humanized sequence efficiently. Questions, comments, and suggestions can be sent to ariel.tennenhouse@weizmann.ac.il. 
 
 ## Citations
 Please cite our manuscript as well as IMGT 
