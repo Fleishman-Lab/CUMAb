@@ -10,7 +10,7 @@ import pandas as pd
 import sys
 import os
 from Bio import SeqIO
-from scripts.modules_graft import read_pdb, find_CDRs
+from modules_graft import read_pdb, find_CDRs
 
 formatted_pdb = sys.argv[1]
 path_to_pdbs = sys.argv[2].strip("/")
