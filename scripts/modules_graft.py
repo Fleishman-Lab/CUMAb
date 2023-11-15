@@ -310,7 +310,7 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
 def read_pdb(pdb_file: str) -> List:
     for record in SeqIO.parse(pdb_file, "pdb-atom"):
         if record.annotations["chain"] == "A":
-            light_chain = record.seq
+            light_chain = str(record.seq)
         elif record.annotations["chain"] == "B":
-            heavy_chain = record.seq
+            heavy_chain = str(record.seq)
     return [light_chain, heavy_chain]
