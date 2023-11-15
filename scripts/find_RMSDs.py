@@ -123,9 +123,9 @@ cmd.load(formatted_pdb, "template")
 for pdb in pdbs:
     name = pdb.split("/")[-1].split(".pdb")[0]
     names.append(name)
-    if os.path.getsize(file) > 0:
+    if os.path.getsize(pdb) > 0:
         try:
-            rmsds = find_CDR_RMSDS(pdb_file)
+            rmsds = find_CDR_RMSDS(pdb)
             L1_rmsd.append(rmsds[0])
             L2_rmsd.append(rmsds[1])
             L3_rmsd.append(rmsds[2])
