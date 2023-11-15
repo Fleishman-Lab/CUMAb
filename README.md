@@ -1,7 +1,7 @@
 # CUMAb
 Licensed under the Non-Profit Open Software License version 3.0.
 
-This repository contains the scripts and xmls needed to run the CUMAb tool for antibody humanization locally. The method is described in detail in our paper published in Nature Biomedical Engineering ([Link to paper](https://rdcu.be/diKmJ)). Please note that we also provide CUMAb as a webserver free to academics ([Link to webserver](https://CUMAb.weizmann.ac.il)) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences that CUMAb uses and provides an example command line to run the Rosetta calculations; however, it is up to the user to decide how to run the command line for each humanized sequence efficiently. Questions, comments, and suggestions can be sent to ariel.tennenhouse@weizmann.ac.il. 
+This repository contains the scripts and xmls needed to run the CUMAb tool for antibody humanization locally. The method is described in detail in our paper published in Nature Biomedical Engineering ([Link to paper](https://rdcu.be/diKmJ)). Please note that we also provide CUMAb as a web server free to academics ([Link to web server](https://CUMAb.weizmann.ac.il)) and that for most uses it is simpler to use the webserver. This repository is intended to allow users to generate the humanized sequences that CUMAb uses and provides an example command line to run the Rosetta calculations; however, it is up to the user to decide how to run the command line for each humanized sequence efficiently. Questions, comments, and suggestions can be sent to ariel.tennenhouse@weizmann.ac.il. 
 
 ## Citations
 Please cite our manuscript as well as IMGT 
@@ -12,7 +12,7 @@ Please cite our manuscript as well as IMGT
 You will need to either have Rosetta installed or install it from http://www.rosettacommons.org. CUMAb uses git version d9d4d5dd3fd516db1ad41b302d147ca0ccd78abd
 <br>
 <br>You will need to download the IMGT databases of antibody germline sequences. Please save them under a folder called "IMGT_databases" in 6 separate files ("IGHV.fasta", "IGHJ.fasta", "IGKV.fasta", "IGKJ.fasta", "IGLJ.fasta", "IGKJ.fasta"). 
-<br>They are available from the following urls:
+<br>They are available from the following URLs:
   - [IGHV](https://www.imgt.org/genedb/GENElect?query=7.6+IGHV&species=Homo+sapiens)
   - [IGHJ](https://www.imgt.org/genedb/GENElect?query=7.6+IGHJ&species=Homo+sapiens)
   - [IGKV](https://www.imgt.org/genedb/GENElect?query=7.6+IGKV&species=Homo+sapiens)
@@ -29,7 +29,7 @@ conda activate CUMAb
 
 ## Running CUMAb
 - CUMAb takes as an input only a pdb file of the antibody you wish to humanize
-  - If you do not have a structure of the antibody, we reccomend to use [ABodyBuilder2](https://opig.stats.ox.ac.uk/webapps/newsabdab/sabpred/abodybuilder2/) to predict the structure
+  - If you do not have a structure of the antibody, we recommend using [ABodyBuilder2](https://opig.stats.ox.ac.uk/webapps/newsabdab/sabpred/abodybuilder2/) to predict the structure
 - The final output includes:
   - a pdb file formatted as necessary for CUMAb
   - a csv file containing the humanized sequences
@@ -43,14 +43,14 @@ conda activate CUMAb
 python {path_to_CUMAb_dir}/CUMAb_pdb_format.py -pdb_file {path_to_PDB_file}
 ```
 - Arguments:
-  - -pdb_file: Required. Path to pdb file of antibody you want to humanize. This should be the only thing in the new directory you made for the CUMAb run
-  - -mode: Not required. Do you want to graft the sequences of the entire CDRs (CUMAb definition) or only SDRs? If you want to use SDR grafting, antigen chain must be provied in the pdb and as an argument here. Default is CDR and the other option is SDR
+  - -pdb_file: Required. Path to pdb file of the antibody you want to humanize. This should be the only thing in the new directory you made for the CUMAb run.
+  - -mode: Not required. Do you want to graft the sequences of the entire CDRs (CUMAb definition) or only SDRs? If you want to use SDR grafting, antigen chain must be provided in the pdb and as an argument here. The default is CDR, and the other option is SDR.
   - -antigen_chain: Not required. Does your pdb contain the antigen as well? Must be a single letter corresponding to the chain of the antigen in the pdb file. Default is none
-  - -screens: Not required. Space separated list of regular expressions that sequences will be exlcuded if they contain outside of the CDRs. Default is NG N[^P][ST]
-  - -origin_species: Not required. What species does your antibody originate from? Options are human, mouse, or rabbit. Human and mouse are treated the same whereas rabbit has some slight differences. Default is mouse
-  - -res_to_fix: Not required. Space separated list of residues which should be kept the same identity as in the parental antibody. Must be formatted as residue number followed by either L or H for light or heavy chain. Residue number must be numbered from start of pdb with no gaps.
+  - -screens: Not required. A space-separated list of regular expressions that sequences will be excluded if they contain outside of the CDRs. Default is NG N[^P][ST]
+  - -origin_species: Not required. What species does your antibody originate from? Options are human, mouse, or rabbit. Human and mouse are treated the same, whereas rabbit has some slight differences. The default is mouse.
+  - -res_to_fix: Not required. Space-separated list of residues that should be kept the same identity as in the parental antibody. Must be formatted as residue number followed by either L or H for light or heavy chain. Residue number must be numbered from the start of pdb with no gaps.
 
-### Step 1b: Finding residues in antibody-antigen interface
+### Step 1b: Finding residues in the antibody-antigen interface
 - **Do not run if your pdb file does not contain an antigen**
 - If your pdb file also contains the antigen of interest, run the following command to find residues in the antibody-antigen interface:
 ```
@@ -62,8 +62,15 @@ From the same directory, fun the following command:
 python {path_to_CUMAb_dir}/CUMAb_graft_sequences.py
 ```
 
-### Step 3: Relax structure of parental antibody
-We reccomend to relax the starting pdb structure before threading the humanized sequences onto it. An example command line for running the relax was created under the file name "relax_command_line_example". Please note that in our protocol for CUMAb we run the initial relax 15 times and take the lowest scoring one to use for the threading. 
+### Step 3: Relax the structure of the parental antibody
+We recommend relaxing the starting pdb structure before threading the humanized sequences onto it. An example command line for running the relax was created under the file name "relax_command_line_example". Please note that in our protocol for CUMAb, we run the initial relax 15 times and take the lowest-scoring one to use for the threading. 
 
-### Step 4: Threading humanized sequences onto structure of parental antibody
+### Step 4: Threading humanized sequences onto the structure of parental antibody
 An example command line for running the threading can be found under the file name "thread_command_example". You will need to run this command for each of the humanized sequences created in part 2. 
+
+### Step 5 (optional): Calculating RMSDs of threaded structures to starting structure
+From the same directory, fun the following command:
+```
+python {path_to_CUMAb_dir}/scripts/find_RMSDs.py {CUMAb_formatted_pdb} {path_to_generated_pdbs}
+```
+This will output a csv that contains for each pdb file in the given path the RMSD of each CDR to the starting structure.
