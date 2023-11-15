@@ -119,7 +119,7 @@ H1_rmsd = []
 H2_rmsd = []
 H3_rmsd = []
 names = []
-cmd.load(relax_pdb, "template")
+cmd.load(formatted_pdb, "template")
 for pdb in pdbs:
     name = pdb.split("/")[-1].split(".pdb")[0]
     names.append(name)
