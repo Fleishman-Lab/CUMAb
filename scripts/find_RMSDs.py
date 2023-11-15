@@ -126,12 +126,12 @@ for pdb in pdbs:
     if os.path.getsize(pdb) > 0:
         try:
             rmsds = find_CDR_RMSDS(pdb)
-            L1_rmsd.append(rmsds[0])
-            L2_rmsd.append(rmsds[1])
-            L3_rmsd.append(rmsds[2])
-            H1_rmsd.append(rmsds[3])
-            H2_rmsd.append(rmsds[4])
-            H3_rmsd.append(rmsds[5])
+            L1_rmsd.append(round(rmsds[0], 3))
+            L2_rmsd.append(round(rmsds[1], 3))
+            L3_rmsd.append(round(rmsds[2], 3))
+            H1_rmsd.append(round(rmsds[3], 3))
+            H2_rmsd.append(round(rmsds[4], 3))
+            H3_rmsd.append(round(rmsds[5], 3))
         except:
             L1_rmsd.append(0)
             L2_rmsd.append(0)
@@ -139,8 +139,8 @@ for pdb in pdbs:
             H1_rmsd.append(0)
             H2_rmsd.append(0)
             H3_rmsd.append(0)
-final_dict = {"Sequence": names, "L1 RMSD": L1_rmsd, "L2 RMSD": L2_rmsd,
-              "L3 RMSD": L3_rmsd, "H1 RMSD": H1_rmsd, "H2 RMSD": H2_rmsd, 
-              "H3": H3_rmsd}
+final_dict = {"Sequence": names, "L1_RMSD": L1_rmsd, "L2_RMSD": L2_rmsd,
+              "L3_RMSD": L3_rmsd, "H1_RMSD": H1_rmsd, "H2_RMSD": H2_rmsd, 
+              "H3_RMSD": H3_rmsd}
 final_df = pd.DataFrame(final_dict)
 final_df.to_csv(f"{pdb_name}_RMSDS.csv", index=False)
