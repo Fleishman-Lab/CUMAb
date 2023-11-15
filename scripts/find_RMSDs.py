@@ -11,6 +11,7 @@ import sys
 import os
 from Bio import SeqIO
 from modules_graft import read_pdb, find_CDRs
+from scripts.modules_args import read_config
 
 formatted_pdb = sys.argv[1]
 path_to_pdbs = sys.argv[2].strip("/")
