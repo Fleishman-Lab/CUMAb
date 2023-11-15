@@ -15,6 +15,7 @@ from modules_args import read_config
 import warnings
 from Bio import BiopythonWarning
 warnings.simplefilter('ignore', BiopythonWarning)
+from pymol import cmd
 
 formatted_pdb = sys.argv[1]
 path_to_pdbs = sys.argv[2].strip("/")
