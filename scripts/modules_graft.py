@@ -306,3 +306,11 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
     CDR_grafted_dict = {"Germline combination": keys, "Sequence": seqs}
     CDR_grafted_df = pd.DataFrame(CDR_grafted_dict)
     CDR_grafted_df.to_csv(f"{name}_grafted_sequences.csv", index=False)
+
+def read_pdb(pdb_file: str) -> List:
+    for record in SeqIO.parse(pdb_file, "pdb-atom"):
+        if record.annotations["chain"] == "A":
+            light_chain = record.seq
+        elif record.annotations["chain"] == "B":
+            heavy_chain = record.seq
+    return [light_chain, heavy_chain]
