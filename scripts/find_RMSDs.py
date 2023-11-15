@@ -27,12 +27,12 @@ pdb_name = pdb_file.split("/")[-1].split(".pdb")[0]
 
 #read sequences from CUMAb formatted pdb
 chain_seqs = read_pdb(formatted_pdb)
-light_chain = chain_seqs[0]
-heavy_chain = chain_seqs[1]
+light = chain_seqs[0]
+heavy = chain_seqs[1]
 
 #find CDR positions
-L_CDRs = find_CDRs("light", light_chain)
-H_CDRs = find_CDRs("heavy", heavy_chain)
+L_CDRs = find_CDRs("light", light)
+H_CDRs = find_CDRs("heavy", heavy)
 
 target_L1_first = light.find(L_CDRs[0]) + 1
 target_L1_last = target_L1_first  + len(L_CDRs[0]) - 1
