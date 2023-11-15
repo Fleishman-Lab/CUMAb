@@ -1,10 +1,8 @@
 """
-takes as input the name of the antibody, whether it's CDR or SDR,
-the antigen chain if there is one, and if it is a model structure
+takes as input a path to a CUMAb formatted pdb file,
+and a path to directory of pdbs
 
-outputs two csvs
-    one with scores for all sequences
-    one with scores for clustered sequences
+outputs one csv with CDR RMSD for each pdb
 """
 
 import glob
