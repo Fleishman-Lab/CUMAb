@@ -71,6 +71,6 @@ An example command line for running the threading can be found under the file na
 ### Step 5 (optional): Calculating RMSDs of threaded structures to starting structure
 From the same directory, fun the following command:
 ```
-python {path_to_CUMAb_dir}/scripts/find_RMSDs.py {CUMAb_formatted_pdb} {path_to_generated_pdbs}
+python {path_to_CUMAb_dir}/scripts/find_RMSDs.py {path_to_relaxed_pdb} {path_to_generated_pdbs}
 ```
 This will output a csv that contains for each pdb file in the given path the RMSD of each CDR to the starting structure.
