@@ -30,7 +30,7 @@ def main():
 	thread_command_line += " @{path_to_CUMAb_dir}/flags -parser:script_vars Sequence={humanized_seq} -overwrite"
 	thread_command_line += f" -parser:script_vars interface_residues={interface_locs}"
 	with open("thread_command_line_example", "w") as f:
-	    f.write(thread_command_line)
+		f.write(thread_command_line)
 
 	#delete unused files
 	assert os.path.isfile(f"{name}_grafted_sequences.csv"), "Error in CDR grafting"
