@@ -6,7 +6,7 @@ channels:
   - defaults
 dependencies:
   - python
-  - biopython=1.74
+  - biopython
   - pandas
   - hmmer
   - pymol
