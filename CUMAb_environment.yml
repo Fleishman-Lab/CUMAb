@@ -9,4 +9,4 @@ dependencies:
   - biopython
   - pandas
   - hmmer
-  - pymol
+  # - pymol
