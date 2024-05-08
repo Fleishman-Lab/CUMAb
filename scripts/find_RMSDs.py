@@ -109,8 +109,9 @@ def find_CDR_RMSDS(pdb_file:str):
     to_return = [L1_pair_fit_val, L2_pair_fit_val, L3_pair_fit_val]
     to_return += [H1_pair_fit_val, H2_pair_fit_val, H3_pair_fit_val]
     return to_return
-
+print("PATH TO PDBS: ", path_to_pdbs)
 files = glob.glob(f"{path_to_pdbs}/*")
+print("FILES: ", files)
 pdbs = [x for x in files if ".pdb" in x]
 L1_rmsd = []
 L2_rmsd = []
