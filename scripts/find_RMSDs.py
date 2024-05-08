@@ -125,6 +125,7 @@ names = []
 cmd.load(formatted_pdb, "template")
 for pdb in pdbs:
     name = pdb.split("/")[-1].split(".pdb")[0]
+    print("PDB: ", pdb)
     names.append(name)
     if os.path.getsize(pdb) > 0:
         try:
