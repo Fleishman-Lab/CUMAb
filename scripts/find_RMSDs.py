@@ -36,6 +36,8 @@ print("HEAVY: ", heavy)
 #find CDR positions
 L_CDRs = find_CDRs("light", light)
 H_CDRs = find_CDRs("heavy", heavy)
+print("L_CDRs: ", L_CDRs)
+print("H_CDRs: ", H_CDRs)
 
 target_L1_first = light.find(L_CDRs[0]) + 1
 target_L1_last = target_L1_first  + len(L_CDRs[0]) - 1
