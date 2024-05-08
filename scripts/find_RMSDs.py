@@ -18,7 +18,7 @@ warnings.simplefilter('ignore', BiopythonWarning)
 from pymol import cmd
 
 formatted_pdb = sys.argv[1]
-path_to_pdbs = sys.argv[2].strip("/")
+path_to_pdbs = sys.argv[2]
 print("FORMATTED PDB: ", formatted_pdb)
 print("PATH TO PDBS: ", path_to_pdbs)
 #load arguments from CUMAb_pdb_format.py
