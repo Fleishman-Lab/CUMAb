@@ -10,3 +10,6 @@ dependencies:
   - pandas
   - hmmer
   - pymol
+  - pip
+  - pip:
+    - mmtf-python
