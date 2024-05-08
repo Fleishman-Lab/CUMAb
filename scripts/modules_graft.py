@@ -312,6 +312,7 @@ def read_pdb(pdb_file: str) -> List:
     light_chain = ""
     heavy_chain = ""
     for record in SeqIO.parse(pdb_file, "pdb-atom"):
+        print("record.annotations: ", record.annotations)
         if record.annotations["chain"] == "A":
             light_chain = str(record.seq)
         elif record.annotations["chain"] == "B":
