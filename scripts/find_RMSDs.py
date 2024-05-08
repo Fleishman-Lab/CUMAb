@@ -31,7 +31,8 @@ pdb_name = pdb_file.split("/")[-1].split(".pdb")[0]
 chain_seqs = read_pdb(formatted_pdb)
 light = chain_seqs[0]
 heavy = chain_seqs[1]
-
+print("LIGHT: ", light)
+print("HEAVY: ", heavy)
 #find CDR positions
 L_CDRs = find_CDRs("light", light)
 H_CDRs = find_CDRs("heavy", heavy)

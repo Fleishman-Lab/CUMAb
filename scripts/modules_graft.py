@@ -85,6 +85,7 @@ def read_fasta(fasta:str) -> str:
     return str(record.seq)
 
 def find_CDRs(type:str, sequence:str, species = "mouse") -> List:
+    print("SEQUENCE:", sequence)
     CDRS = []
     assert type in ["light", "heavy"]
     if type == "light":
