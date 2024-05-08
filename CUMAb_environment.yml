@@ -9,5 +9,4 @@ dependencies:
   - biopython=1.77
   - pandas
   - hmmer
-  - pymol-open-source
-  # - pymol
+  - pymol-bundle
