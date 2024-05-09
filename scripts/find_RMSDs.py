@@ -62,9 +62,9 @@ def find_CDR_RMSDS(pdb_file:str):
     cmd.load(pdb_file, "target")
     cmd.cealign("target", "template")
     target_str =  "resi %s-%s "%(target_L1_first,target_L1_last)
-    target_str += "and target and name C+O and chain A"
+    target_str += "and target and (name C or name O) and chain L"
     template_str = "resi %s-%s "%(target_L1_first,target_L1_last)
-    template_str += "and template and name C+O and chain A"
+    template_str += "and template and (name C or name O) and chain A"
     cmd.select("target_L1_CO",target_str)
     cmd.select("model_L1_CO",template_str)
     L1_pair_fit_val = cmd.rms_cur("target_L1_CO","model_L1_CO")
