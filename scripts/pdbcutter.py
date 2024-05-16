@@ -15,7 +15,6 @@ from Bio.PDB.PDBParser import PDBParser
 from Bio.PDB.Polypeptide import PPBuilder
 from Bio import SeqIO, Seq
 from Bio.SeqRecord import SeqRecord
-from Bio.Alphabet import generic_protein
 import re
 import shutil
 
@@ -314,8 +313,8 @@ for record in SeqIO.parse(pdb, "pdb-atom"):
 
 final_light_seq = final_light_seq.replace("X", "")
 final_heavy_seq = final_heavy_seq.replace("X", "")
-light_seq_bio = SeqRecord(Seq.Seq(final_light_seq, generic_protein), id=name)
-heavy_seq_bio = SeqRecord(Seq.Seq(final_heavy_seq, generic_protein), id=name)
+light_seq_bio = SeqRecord(Seq.Seq(final_light_seq), id=name)
+heavy_seq_bio = SeqRecord(Seq.Seq(final_heavy_seq), id=name)
 SeqIO.write(light_seq_bio, f'pdb_adjusting/{name}_light.fasta', "fasta")
 SeqIO.write(heavy_seq_bio, f'pdb_adjusting/{name}_heavy.fasta', "fasta")
 cmd.delete(name)
