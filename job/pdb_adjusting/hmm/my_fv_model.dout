@@ -1,0 +1,19 @@
+#                                                                            --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name        accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+kappa_cdhit_cut      -            106 my_fv_model          -            220   1.4e-68  215.7   4.4   1   2   4.3e-23   4.3e-23   69.4   0.7     2   105     3   110     2   111 0.86 -
+kappa_cdhit_cut      -            106 my_fv_model          -            220   1.4e-68  215.7   4.4   2   2   1.4e-47   1.4e-47  148.1   0.2     1   106   116   218   116   218 0.98 -
+heavy_cdhit_cut      -            120 my_fv_model          -            220   5.5e-63  198.4   2.3   1   2   7.4e-50   7.4e-50  156.0   0.7     1   120     1   113     1   113 0.98 -
+heavy_cdhit_cut      -            120 my_fv_model          -            220   5.5e-63  198.4   2.3   2   2   1.4e-14   1.4e-14   42.1   0.0     4   117   118   217   115   220 0.80 -
+lambda_cdhit_cut     -            106 my_fv_model          -            220     1e-49  155.2   6.2   1   2   1.2e-12   1.2e-12   36.0   0.6     5   103     5   108     1   111 0.83 -
+lambda_cdhit_cut     -            106 my_fv_model          -            220     1e-49  155.2   6.2   2   2   1.5e-39   1.5e-39  122.5   0.6     1   105   115   217   115   218 0.95 -
+#
+# Program:         hmmscan
+# Version:         3.4 (Aug 2023)
+# Pipeline mode:   SCAN
+# Query file:      pdb_adjusting/my_fv_model.fasta
+# Target file:     /home/ec2-user/src/CUMAb/hmm_database/igg-chains_cdhit.hmm
+# Option settings: hmmscan -o pdb_adjusting/hmm/my_fv_model.out --domtblout pdb_adjusting/hmm/my_fv_model.dout /home/ec2-user/src/CUMAb/hmm_database/igg-chains_cdhit.hmm pdb_adjusting/my_fv_model.fasta 
+# Current dir:     /home/ec2-user/src/CUMAb/job
+# Date:            Thu May 16 08:38:57 2024
+# [ok]
