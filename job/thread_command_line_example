@@ -1,0 +1,1 @@
+{path_to_rosetta_exec} -database {path_to_rosetta_database} -parser:protocol {path_to_CUMAb_dir}/xmls/CUMAb.xml -s {path_to_relaxed_pdb} @{path_to_CUMAb_dir}/flags -parser:script_vars Sequence={humanized_seq} -overwrite -parser:script_vars interface_residues=
