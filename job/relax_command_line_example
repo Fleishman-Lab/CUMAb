@@ -1,1 +1,0 @@
-{path_to_rosetta_exec} -database {path_to_rosetta_database} -parser:protocol {path_to_CUMAb_dir}/xmls/Relax.xml -s my_fv_model_CUMAb_format.pdb @{path_to_CUMAb_dir}/flags -parser:script_vars interface_residues=
