@@ -47,22 +47,25 @@ class Chain:
         self.sequence: str = sequence
         self.annotated_sequence: List[str] = annotated_sequence
         self.chain_type: ChainType = chain_type
-        self.CDRs: List[str] = self._get_CDRs()
+        CDRs = self._get_CDRs()
+        self.CDR1 = CDRs['CDR1']
+        self.CDR2 = CDRs['CDR2']
+        self.CDR3 = CDRs['CDR3']
 
     def _get_CDRs(self) -> List[str]:
-        heavy_CDRs = []
-        light_CDRs = []
+        heavy_CDRs = {}
+        light_CDRs = {}
         if self.chain_type == ChainType.HEAVY:
-            for CDR in [HC_CDR1, HC_CDR2, HC_CDR3]:
+            for idx, CDR in [HC_CDR1, HC_CDR2, HC_CDR3]:
                 indices = find_indices(CDR, self.annotated_sequence)
                 CDR_seq = "".join([self.sequence[i] for i in indices])
-                heavy_CDRs.append(CDR_seq)
+                heavy_CDRs[f"CDR{idx}"] = CDR_seq
             return heavy_CDRs
         elif self.chain_type == ChainType.LIGHT:
             for CDR in [LC_CDR1, LC_CDR2, LC_CDR3]:
                 indices = find_indices(CDR, self.annotated_sequence)
                 CDR_seq = "".join([self.sequence[i] for i in indices])
-                light_CDRs.append(CDR_seq)
+                light_CDRs[f"CDR{idx}"] = CDR_seq
             return light_CDRs
         
     @property
