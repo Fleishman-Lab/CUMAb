@@ -51,7 +51,8 @@ class Chain:
         self.CDR1 = CDRs['CDR1']
         self.CDR2 = CDRs['CDR2']
         self.CDR3 = CDRs['CDR3']
-
+        self.CDRs: List[str] = [self.CDR1, self.CDR2, self.CDR3]
+        
     def _get_CDRs(self) -> List[str]:
         heavy_CDRs = {}
         light_CDRs = {}
