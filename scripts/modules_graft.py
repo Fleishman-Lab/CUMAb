@@ -8,12 +8,49 @@ import json
 import re
 from typing import Dict, List, Tuple
 import pandas as pd
-
+from antpack import MultiChainAnnotator
 from Bio import SeqIO
 
 CUMAb_dir = [x for x in sys.path if "CUMAb" in x.split("/")][0]
 while CUMAb_dir.split("/")[-1] != "CUMAb":
     CUMAb_dir = CUMAb_dir.split("/" + CUMAb_dir.split("/")[-1])[0]
+
+def generate_cdr_indices_dict():
+    """
+    HC CDR1: 26-35
+    HC CDR2: 50-58
+    HC CDR3: 94-102
+    LC CDR1: 24-34
+    LC CDR2: 50-56
+    LC CDR3: 89-97
+    """
+    ranges = {
+        'HC_CDR1': (26, 35),
+        'HC_CDR2': (50, 58),
+        'HC_CDR3': (94, 102),
+        'LC_CDR1': (24, 34),
+        'LC_CDR2': (50, 56),
+        'LC_CDR3': (89, 97)
+    }
+    
+    # Initialize the dictionary to store lists
+    cdr_indices_dict = {}
+    
+    # Create lists for each range
+    for key, (start, end) in ranges.items():
+        cdr_indices_dict[key] = [str(i) for i in range(start, end + 1)]
+    
+    return cdr_indices_dict
+
+cdr_indices_dict = generate_cdr_indices_dict()
+
+HC_CDR1 = cdr_indices_dict['HC_CDR1']
+HC_CDR2 = cdr_indices_dict['HC_CDR2']
+HC_CDR3 = cdr_indices_dict['HC_CDR3']
+LC_CDR1 = cdr_indices_dict['LC_CDR1']
+LC_CDR2 = cdr_indices_dict['LC_CDR2']
+LC_CDR3 = cdr_indices_dict['LC_CDR3']
+
 
 def fasta_database_parser() -> List:
     databases = ["IGHV", "IGHJ", "IGKV", "IGKJ", "IGLV", "IGLJ"]
@@ -83,6 +120,21 @@ def parse_IMGT_databases() -> List:
 def read_fasta(fasta:str) -> str:
     record = SeqIO.read(fasta, 'fasta')
     return str(record.seq)
+
+def find_indices(list1, list2):
+    def extract_number(s):
+        match = re.match(r'\d+', s)
+        return match.group(0) if match else s
+    indices_dict = {}
+    for item in list1:
+        indices = [index for index, element in enumerate(list2) if extract_number(element) == item]
+        indices_dict[item] = indices
+    return indices_dict
+
+def extract_numbered_sequence(sequence: str) -> List:
+    annotator = MultiChainAnnotator(scheme="martin")
+    extracted_seqs = annotator.analyze_seq(sequence)
+
 
 def find_CDRs(type:str, sequence:str, species = "mouse") -> List:
     print("SEQUENCE:", sequence)

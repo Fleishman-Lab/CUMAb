@@ -9,3 +9,6 @@ dependencies:
   - biopython
   - pandas
   - pymol
+  - pip
+  - pip:
+    - antpack # requires sudo
