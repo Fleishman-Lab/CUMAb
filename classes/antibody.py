@@ -1,5 +1,7 @@
 from antpack import MultiChainAnnotator
 from typing import List
+from classes.chain import Chain
+
 
 class Antibody:
     def __init__(self, sequence: str, numbering_scheme: str):
@@ -12,7 +14,7 @@ class Antibody:
             elif chain.type == 'L':
                 self.light_chain = chain
 
-    def _get_chains(self, numbering_scheme:str):
+    def _get_chains(self, numbering_scheme: str) -> List[Chain]:
         annotator = MultiChainAnnotator()
         chains = []
         chain_tups = annotator.analyze_seq(self.sequence, scheme=numbering_scheme)
@@ -31,22 +33,3 @@ class Antibody:
     @property
     def light_chain(self):
         return self.light_chain
-
-
-class Chain:
-    def __init__(self, sequence:str, annotated_sequence:List[str], type:str):
-        self.sequence = sequence
-        self.annotated_sequence = annotated_sequence
-        self.type = type
-
-    @property
-    def sequence(self):
-        return self.sequence
-    
-    @property
-    def annotated_sequence(self):
-        return self.annotated_sequence
-    
-    @property
-    def type(self):
-        return self.type
