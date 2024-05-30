@@ -5,19 +5,19 @@ from classes.chain import Chain
 
 class Antibody:
     def __init__(self, sequence: str, numbering_scheme: str):
-        self.sequence = sequence
-        self.numbering_scheme = numbering_scheme
-        self.chains = self._get_chains(numbering_scheme)
+        self.sequence: str = sequence
+        self.numbering_scheme: str = numbering_scheme
+        self.chains: List[Chain] = self._get_chains()
         for chain in self.chains:
             if chain.type == 'H':
-                self.heavy_chain = chain
+                self.heavy_chain: Chain = chain
             elif chain.type == 'L':
-                self.light_chain = chain
+                self.light_chain: Chain = chain
 
-    def _get_chains(self, numbering_scheme: str) -> List[Chain]:
+    def _get_chains(self) -> List[Chain]:
         annotator = MultiChainAnnotator()
         chains = []
-        chain_tups = annotator.analyze_seq(self.sequence, scheme=numbering_scheme)
+        chain_tups = annotator.analyze_seq(self.sequence, scheme=self.numbering_scheme)
         for chain_tup in chain_tups:
             chain = Chain(chain_tup[0], chain_tup[1], chain_tup[3])
             chains.append(chain)
