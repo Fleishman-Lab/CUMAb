@@ -212,13 +212,18 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
             grafted_light_seq = graft_CDRs(germline_light_seq, mouse_light_CDRs, human_light_CDRs)
             grafted_heavy_seq = graft_CDRs(germline_heavy_seq, mouse_heavy_CDRs, human_heavy_CDRs)
             grafted_seq = grafted_light_seq + grafted_heavy_seq
-            grafted_antibody: Antibody = Antibody(grafted_seq, "martin")
-            grafted_antibody_light_chain: Chain = grafted_antibody.light_chain
-            grafted_antibody_heavy_chain: Chain = grafted_antibody.heavy_chain
-            if not screen_motifs(grafted_antibody_light_chain, grafted_antibody_heavy_chain, screens):
+            if not screens:
                 if grafted_seq not in seqs:
                     seqs.append(grafted_seq)
                     keys.append(key)
+            else:
+                grafted_antibody: Antibody = Antibody(grafted_seq, "martin")
+                grafted_antibody_light_chain: Chain = grafted_antibody.light_chain
+                grafted_antibody_heavy_chain: Chain = grafted_antibody.heavy_chain
+                if not screen_motifs(grafted_antibody_light_chain, grafted_antibody_heavy_chain, screens):
+                    if grafted_seq not in seqs:
+                        seqs.append(grafted_seq)
+                        keys.append(key)
 
     CDR_grafted_dict = {"Germline combination": keys, "Sequence": seqs}
     CDR_grafted_df = pd.DataFrame(CDR_grafted_dict)
