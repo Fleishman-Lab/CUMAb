@@ -152,10 +152,12 @@ def graft_interface_locs(human_seq:str, mouse_seq:str, locs:str) -> str:
             list_human_seq[int_loc-1] = mouse_seq[int_loc-1]
     return "".join(list_human_seq)
 
-def screen_motifs(light_seq:str, heavy_seq:str, screens:List) -> bool:
+def screen_motifs(light_chain: Chain, heavy_chain: Chain, screens:List) -> bool:
     value = False
-    light_CDRs = find_CDRs("light", light_seq)
-    heavy_CDRs = find_CDRs("heavy", heavy_seq)
+    light_CDRs: List[str] = light_chain.CDRs
+    heavy_CDRs: List[str] = heavy_chain.CDRs
+    light_seq: str = light_chain.sequence
+    heavy_seq: str = heavy_chain.sequence
     for screen in screens:
         r_string = r"{}".format(screen)
         light_count = 0
@@ -209,24 +211,13 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
             
             grafted_light_seq = graft_CDRs(germline_light_seq, mouse_light_CDRs, human_light_CDRs)
             grafted_heavy_seq = graft_CDRs(germline_heavy_seq, mouse_heavy_CDRs, human_heavy_CDRs)
-            final_light_seq = adjust_seq("light", light_seq, grafted_light_seq)
-            final_heavy_seq = adjust_seq("heavy", heavy_seq, grafted_heavy_seq)
-            final_seq = final_light_seq + final_heavy_seq
-            interface_locs = find_interface_locs(antigen_chain)
-            if res_to_fix != "none":
-                for res in res_to_fix:
-                    chain_id = res[-1]
-                    num = int(res.split(chain_id)[0])
-                    if chain_id == "H":
-                        num += len(light_seq)
-                    if interface_locs:
-                        interface_locs += f",{num}"
-                    else:
-                        interface_locs += f"{num}"
-            final_seq = graft_interface_locs(final_seq, chain, interface_locs)
-            if not screen_motifs(final_seq[0:len(final_light_seq)], final_seq[len(final_light_seq):], screens):
-                if final_seq not in seqs:
-                    seqs.append(final_seq)
+            grafted_seq = grafted_light_seq + grafted_heavy_seq
+            grafted_antibody: Antibody = Antibody(grafted_seq, "martin")
+            grafted_antibody_light_chain: Chain = grafted_antibody.light_chain
+            grafted_antibody_heavy_chain: Chain = grafted_antibody.heavy_chain
+            if not screen_motifs(grafted_antibody_light_chain, grafted_antibody_heavy_chain, screens):
+                if grafted_seq not in seqs:
+                    seqs.append(grafted_seq)
                     keys.append(key)
 
     CDR_grafted_dict = {"Germline combination": keys, "Sequence": seqs}
