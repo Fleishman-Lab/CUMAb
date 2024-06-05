@@ -6,7 +6,7 @@ import os
 import sys
 import json
 import re
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional
 import pandas as pd
 from classes.antibody import Antibody 
 from classes.chain import Chain
@@ -172,8 +172,7 @@ def screen_motifs(light_chain: Chain, heavy_chain: Chain, screens:List) -> bool:
             value = True
     return value
 
-def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List, origin_species: str, res_to_fix) -> None:
-    name = pdb_file.split("/")[-1].split(".")[0]
+def graft_sequences(sequence: str, scheme: str, screens: Optional[List] = None) -> None:
     sequence_dicts = parse_IMGT_databases()
     heavy_dict = sequence_dicts[0]
     kappa_dict = sequence_dicts[1]
@@ -181,19 +180,16 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
 
     keys = []
     seqs = []
-    with open(f"kappa_or_lambda.txt") as f:
-        for line in f:
-            if "kappa" in line:
-                light_dict = kappa_dict
-            elif "lambda" in line:
-                light_dict = lambda_dict
-
-    light_seq = read_fasta(f"pdb_adjusting/{name}_light.fasta")
-    heavy_seq = read_fasta(f"pdb_adjusting/{name}_heavy.fasta")
-    sequence = light_seq + heavy_seq
-    antibody = Antibody(sequence, "martin")
+    light_dict = {}
+    antibody = Antibody(sequence, scheme)
     light_chain = antibody.light_chain
     heavy_chain = antibody.heavy_chain
+
+    if light_chain.type == "K":
+        light_dict = kappa_dict
+    elif light_chain.type == "L":
+        light_dict = lambda_dict
+
     mouse_light_CDRs = light_chain.CDRs
     mouse_heavy_CDRs = heavy_chain.CDRs
 
@@ -203,7 +199,7 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
             germline_heavy_seq: str = heavy_dict[heavy]
             germline_light_seq: str = light_dict[light]
             human_seq: str = germline_heavy_seq + germline_light_seq
-            human_antibody: Antibody = Antibody(human_seq, "martin")
+            human_antibody: Antibody = Antibody(human_seq, scheme)
             human_light_chain: Chain = human_antibody.light_chain
             human_heavy_chain: Chain = human_antibody.heavy_chain
             human_light_CDRs: List[str] = human_light_chain.CDRs
@@ -217,7 +213,7 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
                     seqs.append(grafted_seq)
                     keys.append(key)
             else:
-                grafted_antibody: Antibody = Antibody(grafted_seq, "martin")
+                grafted_antibody: Antibody = Antibody(grafted_seq, scheme)
                 grafted_antibody_light_chain: Chain = grafted_antibody.light_chain
                 grafted_antibody_heavy_chain: Chain = grafted_antibody.heavy_chain
                 if not screen_motifs(grafted_antibody_light_chain, grafted_antibody_heavy_chain, screens):
@@ -227,7 +223,7 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
 
     CDR_grafted_dict = {"Germline combination": keys, "Sequence": seqs}
     CDR_grafted_df = pd.DataFrame(CDR_grafted_dict)
-    CDR_grafted_df.to_csv(f"{name}_grafted_sequences.csv", index=False)
+    CDR_grafted_df.to_csv("grafted_sequences.csv", index=False)
 
 def read_pdb(pdb_file: str) -> List:
     light_chain = ""
