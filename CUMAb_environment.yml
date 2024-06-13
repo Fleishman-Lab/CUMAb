@@ -5,8 +5,10 @@ channels:
   - schrodinger
   - defaults
 dependencies:
-  - python=3.7.11
-  - biopython=1.74
-  - pandas=0.25.1
-  - hmmer=3.3.2
-  - pymol=2.3.3
+  - python
+  - biopython
+  - pandas
+  - pymol
+  - pip
+  - pip:
+    - antpack # requires sudo

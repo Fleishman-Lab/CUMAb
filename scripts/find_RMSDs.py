@@ -18,8 +18,9 @@ warnings.simplefilter('ignore', BiopythonWarning)
 from pymol import cmd
 
 formatted_pdb = sys.argv[1]
-path_to_pdbs = sys.argv[2].strip("/")
-
+path_to_pdbs = sys.argv[2]
+print("FORMATTED PDB: ", formatted_pdb)
+print("PATH TO PDBS: ", path_to_pdbs)
 #load arguments from CUMAb_pdb_format.py
 pdb_file, mode, antigen_chain, screens, origin_species, res_to_fix = read_config()
 
@@ -30,10 +31,13 @@ pdb_name = pdb_file.split("/")[-1].split(".pdb")[0]
 chain_seqs = read_pdb(formatted_pdb)
 light = chain_seqs[0]
 heavy = chain_seqs[1]
-
+print("LIGHT: ", light)
+print("HEAVY: ", heavy)
 #find CDR positions
 L_CDRs = find_CDRs("light", light)
 H_CDRs = find_CDRs("heavy", heavy)
+print("L_CDRs: ", L_CDRs)
+print("H_CDRs: ", H_CDRs)
 
 target_L1_first = light.find(L_CDRs[0]) + 1
 target_L1_last = target_L1_first  + len(L_CDRs[0]) - 1
@@ -58,50 +62,50 @@ def find_CDR_RMSDS(pdb_file:str):
     cmd.load(pdb_file, "target")
     cmd.cealign("target", "template")
     target_str =  "resi %s-%s "%(target_L1_first,target_L1_last)
-    target_str += "and target and name C+O and chain A"
+    target_str += "and target and (name C or name O) and chain L"
     template_str = "resi %s-%s "%(target_L1_first,target_L1_last)
-    template_str += "and template and name C+O and chain A"
+    template_str += "and template and (name C or name O) and chain A"
     cmd.select("target_L1_CO",target_str)
     cmd.select("model_L1_CO",template_str)
     L1_pair_fit_val = cmd.rms_cur("target_L1_CO","model_L1_CO")
 
     target_str =  "resi %s-%s "%(target_L2_first,target_L2_last)
-    target_str += "and target and name C+O and chain A"
+    target_str += "and target and (name C or name O) and chain L"
     template_str = "resi %s-%s "%(target_L2_first,target_L2_last)
-    template_str += "and template and name C+O and chain A"
+    template_str += "and template and (name C or name O) and chain A"
     cmd.select("target_L2_CO",target_str)
     cmd.select("model_L2_CO",template_str)
     L2_pair_fit_val = cmd.rms_cur("target_L2_CO","model_L2_CO")
 
     target_str =  "resi %s-%s "%(target_L3_first,target_L3_last)
-    target_str += "and target and name C+O and chain A"
+    target_str += "and target and (name C or name O) and chain L"
     template_str = "resi %s-%s "%(target_L3_first,target_L3_last)
-    template_str += "and template and name C+O and chain A"
+    template_str += "and template and (name C or name O) and chain A"
     cmd.select("target_L3_CO",target_str)
     cmd.select("model_L3_CO",template_str)
     L3_pair_fit_val = cmd.rms_cur("target_L3_CO","model_L3_CO")
 
     target_str =  "resi %s-%s "%(target_H1_first,target_H1_last)
-    target_str += "and target and name C+O and chain B"
+    target_str += "and target and (name C or name O) and chain H"
     template_str = "resi %s-%s "%(target_H1_first,target_H1_last)
-    template_str += "and template and name C+O and chain B"
+    template_str += "and template and (name C or name O) and chain B"
 
     cmd.select("target_H1_CO",target_str)
     cmd.select("model_H1_CO",template_str)
     H1_pair_fit_val = cmd.rms_cur("target_H1_CO","model_H1_CO")
 
     target_str =  "resi %s-%s "%(target_H2_first,target_H2_last)
-    target_str += "and target and name C+O and chain B"
+    target_str += "and target and (name C or name O) and chain H"
     template_str = "resi %s-%s "%(target_H2_first,target_H2_last)
-    template_str += "and template and name C+O and chain B"
+    template_str += "and template and (name C or name O) and chain B"
     cmd.select("target_H2_CO",target_str)
     cmd.select("model_H2_CO",template_str)
     H2_pair_fit_val = cmd.rms_cur("target_H2_CO","model_H2_CO")
 
     target_str =  "resi %s-%s "%(target_H3_first,target_H3_last)
-    target_str += "and target and name C+O and chain B"
+    target_str += "and target and (name C or name O) and chain H"
     template_str = "resi %s-%s "%(target_H3_first,target_H3_last)
-    template_str += "and template and name C+O and chain B"
+    template_str += "and template and (name C or name O) and chain B"
     cmd.select("target_H3_CO",target_str)
     cmd.select("model_H3_CO",template_str)
     H3_pair_fit_val = cmd.rms_cur("target_H3_CO","model_H3_CO")
@@ -109,8 +113,9 @@ def find_CDR_RMSDS(pdb_file:str):
     to_return = [L1_pair_fit_val, L2_pair_fit_val, L3_pair_fit_val]
     to_return += [H1_pair_fit_val, H2_pair_fit_val, H3_pair_fit_val]
     return to_return
-
+print("PATH TO PDBS: ", path_to_pdbs)
 files = glob.glob(f"{path_to_pdbs}/*")
+print("FILES: ", files)
 pdbs = [x for x in files if ".pdb" in x]
 L1_rmsd = []
 L2_rmsd = []
@@ -122,6 +127,8 @@ names = []
 cmd.load(formatted_pdb, "template")
 for pdb in pdbs:
     name = pdb.split("/")[-1].split(".pdb")[0]
+    print("PDB: ", pdb)
+    print("NAME: ", name)
     names.append(name)
     if os.path.getsize(pdb) > 0:
         try:

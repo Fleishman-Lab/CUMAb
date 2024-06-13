@@ -6,14 +6,16 @@ import os
 import sys
 import json
 import re
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional
 import pandas as pd
-
+from classes.antibody import Antibody 
+from classes.chain import Chain
 from Bio import SeqIO
 
 CUMAb_dir = [x for x in sys.path if "CUMAb" in x.split("/")][0]
 while CUMAb_dir.split("/")[-1] != "CUMAb":
     CUMAb_dir = CUMAb_dir.split("/" + CUMAb_dir.split("/")[-1])[0]
+
 
 def fasta_database_parser() -> List:
     databases = ["IGHV", "IGHJ", "IGKV", "IGKJ", "IGLV", "IGLJ"]
@@ -84,40 +86,6 @@ def read_fasta(fasta:str) -> str:
     record = SeqIO.read(fasta, 'fasta')
     return str(record.seq)
 
-def find_CDRs(type:str, sequence:str, species = "mouse") -> List:
-    CDRS = []
-    assert type in ["light", "heavy"]
-    if type == "light":
-        L1 = re.search("C(.{8}.+?)W", sequence)[1]
-        L2 = re.search(".{11}(.{10}.*?).{32}C", sequence.split(L1)[1])[1]
-        L3 = re.search(".{24}.+?C(.+?)FG.G", sequence.split(L2)[1])[1]
-        CDRS = [L1, L2, L3]
-    if type == "heavy":
-        H1 = re.search("C.{1}(.{11}.+?)W[^GNS]", sequence)[1]
-        if species == "rabbit":
-            if re.search(".{11}(.+?).{7}[KR][LIVFTA][TSIA]",
-                           sequence.split(H1)[1]):
-                H2 = re.search(".{11}(.+?).{7}[KR][LIVFTA][TSIA]",
-                                sequence.split(H1)[1])
-                if re.search("C(.+?)WG.G", sequence.split(H2)[1]):
-                    H3 = re.search("C(.+?)WG.G", sequence.split(H2)[1])[1]
-                elif re.search("C(.+?)WD.G", sequence.split(H2)[1]):
-                    H3 = re.search("C(.+?)WD.G", sequence.split(H2)[1])[1]
-                else:
-                    sys.exit("Could not find CDR H3")
-            else:
-                sys.exit("Could not find CDR L1")
-        else:
-            H2 = re.search(".{11}(.+?).{36}C", sequence.split(H1)[1])[1]
-            if re.search(".{36}C(.+?)WG.G", sequence.split(H2)[1]):
-                H3 = re.search(".{36}C(.+?)WG.G", sequence.split(H2)[1])[1]
-            elif re.search(".{36}C(.+?)WD.G", sequence.split(H2)[1]):
-                H3 = re.search(".{36}C(.+?)WD.G", sequence.split(H2)[1])[1]
-            else:
-                sys.exit("Could not find CDR H3")
-        CDRS = [H1, H2, H3]
-    return CDRS
-
 def check_CDR_lengths(mouse_light:List, mouse_heavy:List,
                         human_light:List, human_heavy:List) -> bool:
     to_return = True
@@ -133,33 +101,8 @@ def check_CDR_lengths(mouse_light:List, mouse_heavy:List,
 
 def graft_CDRs(sequence:str, mouse_CDRs:List,
                 human_CDRs:List, mode="CDR") -> str:
-    assert len(mouse_CDRs) == len(human_CDRs)
-    if mode == "CDR":
-        for i in range(len(mouse_CDRs)):
-            sequence = sequence.replace(human_CDRs[i], mouse_CDRs[i])
-    elif mode == "SDR":
-        mouse_H3 = mouse_CDRs[2]
-        human_H3 = human_CDRs[2]
-        if len(mouse_H3) != len(human_H3):
-            mouse_H3_list = list(mouse_H3)
-            human_H3_list = list(human_H3)
-            new_human_H3 = ""
-            if len(mouse_H3) > len(human_H3):
-                for res in range(2):
-                    new_human_H3 += human_H3[res]
-                for ins in range(2, 2+len(mouse_H3)-len(human_H3)):
-                    new_human_H3 += mouse_H3[ins]
-                for end_res in range(2, len(human_H3)):
-                    new_human_H3 += human_H3[end_res]
-            elif len(human_H3) > len(mouse_H3):
-                if len(human_H3) - len(mouse_H3) == 1:
-                    for res in range(0,7):
-                        new_human_H3 += human_H3[res]
-                    for res in range(8, len(human_H3)):
-                        new_human_H3 += human_H3[res]
-                elif len(human_H3) - len(mouse_H3) > 1:
-                    return False
-            sequence = sequence.replace(human_H3, new_human_H3)
+    for i in range(len(mouse_CDRs)):
+        sequence = sequence.replace(human_CDRs[i], mouse_CDRs[i])
     return sequence
 
 def adjust_seq(type:str, mouse_seq:str, humanized_seq:str) -> str:
@@ -209,10 +152,12 @@ def graft_interface_locs(human_seq:str, mouse_seq:str, locs:str) -> str:
             list_human_seq[int_loc-1] = mouse_seq[int_loc-1]
     return "".join(list_human_seq)
 
-def screen_motifs(light_seq:str, heavy_seq:str, screens:List) -> bool:
+def screen_motifs(light_chain: Chain, heavy_chain: Chain, screens:List) -> bool:
     value = False
-    light_CDRs = find_CDRs("light", light_seq)
-    heavy_CDRs = find_CDRs("heavy", heavy_seq)
+    light_CDRs: List[str] = light_chain.CDRs
+    heavy_CDRs: List[str] = heavy_chain.CDRs
+    light_seq: str = light_chain.sequence
+    heavy_seq: str = heavy_chain.sequence
     for screen in screens:
         r_string = r"{}".format(screen)
         light_count = 0
@@ -227,8 +172,7 @@ def screen_motifs(light_seq:str, heavy_seq:str, screens:List) -> bool:
             value = True
     return value
 
-def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List, origin_species: str, res_to_fix) -> None:
-    name = pdb_file.split("/")[-1].split(".")[0]
+def graft_sequences(sequence: str, scheme: str, screens: Optional[List] = None) -> None:
     sequence_dicts = parse_IMGT_databases()
     heavy_dict = sequence_dicts[0]
     kappa_dict = sequence_dicts[1]
@@ -236,79 +180,57 @@ def graft_sequences(pdb_file: str, mode: str, antigen_chain: str, screens: List,
 
     keys = []
     seqs = []
-    with open(f"kappa_or_lambda.txt") as f:
-        for line in f:
-            if "kappa" in line:
-                light_dict = kappa_dict
-            elif "lambda" in line:
-                light_dict = lambda_dict
+    light_dict = {}
+    antibody = Antibody(sequence, scheme)
+    light_chain = antibody.light_chain
+    heavy_chain = antibody.heavy_chain
 
-    light_seq = read_fasta(f"pdb_adjusting/{name}_light.fasta")
-    heavy_seq = read_fasta(f"pdb_adjusting/{name}_heavy.fasta")
-    chain = light_seq + heavy_seq
-    
-    mouse_light_CDRs = find_CDRs("light", light_seq, origin_species)
-    mouse_heavy_CDRs = find_CDRs("heavy", heavy_seq, origin_species)
+    if light_chain.type == "K":
+        light_dict = kappa_dict
+    elif light_chain.type == "L":
+        light_dict = lambda_dict
+
+    mouse_light_CDRs = light_chain.CDRs
+    mouse_heavy_CDRs = heavy_chain.CDRs
 
     for heavy in heavy_dict:
         for light in light_dict:
             key = light + "-" + heavy
-            germline_heavy_seq = heavy_dict[heavy]
-            germline_light_seq = light_dict[light]
-            human_light_CDRs = find_CDRs("light", germline_light_seq, origin_species)
-            human_heavy_CDRs = find_CDRs("heavy", germline_heavy_seq, origin_species)
-            if mode == "SDR":
-                if check_CDR_lengths(mouse_light_CDRs, mouse_heavy_CDRs, human_light_CDRs, human_heavy_CDRs):
-                    grafted_heavy_seq = graft_CDRs(germline_heavy_seq, mouse_heavy_CDRs, human_heavy_CDRs, "SDR")
-                    grafted_light_seq = germline_light_seq
-                    final_light_seq = adjust_seq("light", light_seq, grafted_light_seq)
-                    final_heavy_seq = adjust_seq("heavy", heavy_seq, grafted_heavy_seq)
-                    final_seq = final_light_seq + final_heavy_seq
-                    interface_locs = find_interface_locs(antigen_chain)
-                    if res_to_fix != "none":
-                        for res in res_to_fix:
-                            chain_id = res[-1]
-                            num = int(res.split(chain_id)[0])
-                            if chain_id == "H":
-                                num += len(light_seq)
-                            if interface_locs:
-                                interface_locs += f",{num}"
-                            else:
-                                interface_locs += f"{num}"
-                    final_seq = graft_interface_locs(final_seq, chain, interface_locs)
-                    if not screen_motifs(final_seq[0:len(final_light_seq)], final_seq[len(final_light_seq):], screens):
-                        if final_seq not in seqs:
-                            seqs.append(final_seq)
-                            keys.append(key)
-            elif mode == "CDR":
-                grafted_light_seq = graft_CDRs(germline_light_seq, mouse_light_CDRs, human_light_CDRs)
-                grafted_heavy_seq = graft_CDRs(germline_heavy_seq, mouse_heavy_CDRs, human_heavy_CDRs)
-                final_light_seq = adjust_seq("light", light_seq, grafted_light_seq)
-                final_heavy_seq = adjust_seq("heavy", heavy_seq, grafted_heavy_seq)
-                final_seq = final_light_seq + final_heavy_seq
-                interface_locs = find_interface_locs(antigen_chain)
-                if res_to_fix != "none":
-                    for res in res_to_fix:
-                        chain_id = res[-1]
-                        num = int(res.split(chain_id)[0])
-                        if chain_id == "H":
-                            num += len(light_seq)
-                        if interface_locs:
-                            interface_locs += f",{num}"
-                        else:
-                            interface_locs += f"{num}"
-                final_seq = graft_interface_locs(final_seq, chain, interface_locs)
-                if not screen_motifs(final_seq[0:len(final_light_seq)], final_seq[len(final_light_seq):], screens):
-                    if final_seq not in seqs:
-                        seqs.append(final_seq)
+            germline_heavy_seq: str = heavy_dict[heavy]
+            germline_light_seq: str = light_dict[light]
+            human_seq: str = germline_heavy_seq + germline_light_seq
+            human_antibody: Antibody = Antibody(human_seq, scheme)
+            human_light_chain: Chain = human_antibody.light_chain
+            human_heavy_chain: Chain = human_antibody.heavy_chain
+            human_light_CDRs: List[str] = human_light_chain.CDRs
+            human_heavy_CDRs: List[str] = human_heavy_chain.CDRs
+            
+            grafted_light_seq = graft_CDRs(germline_light_seq, mouse_light_CDRs, human_light_CDRs)
+            grafted_heavy_seq = graft_CDRs(germline_heavy_seq, mouse_heavy_CDRs, human_heavy_CDRs)
+            grafted_seq = grafted_light_seq + grafted_heavy_seq
+            if not screens:
+                if grafted_seq not in seqs:
+                    seqs.append(grafted_seq)
+                    keys.append(key)
+            else:
+                grafted_antibody: Antibody = Antibody(grafted_seq, scheme)
+                grafted_antibody_light_chain: Chain = grafted_antibody.light_chain
+                grafted_antibody_heavy_chain: Chain = grafted_antibody.heavy_chain
+                if not screen_motifs(grafted_antibody_light_chain, grafted_antibody_heavy_chain, screens):
+                    if grafted_seq not in seqs:
+                        seqs.append(grafted_seq)
                         keys.append(key)
 
     CDR_grafted_dict = {"Germline combination": keys, "Sequence": seqs}
     CDR_grafted_df = pd.DataFrame(CDR_grafted_dict)
-    CDR_grafted_df.to_csv(f"{name}_grafted_sequences.csv", index=False)
+    CDR_grafted_df.to_csv("grafted_sequences.csv", index=False)
 
 def read_pdb(pdb_file: str) -> List:
+    light_chain = ""
+    heavy_chain = ""
     for record in SeqIO.parse(pdb_file, "pdb-atom"):
+        print("record.annotations: ", record.annotations)
+        print("record.seq: ", record.seq)
         if record.annotations["chain"] == "A":
             light_chain = str(record.seq)
         elif record.annotations["chain"] == "B":

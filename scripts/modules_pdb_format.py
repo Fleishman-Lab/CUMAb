@@ -14,7 +14,6 @@ from Bio.PDB.PDBParser import PDBParser
 from Bio.PDB.Polypeptide import PPBuilder
 from Bio import SeqIO, SearchIO, Seq
 from Bio.SeqRecord import SeqRecord
-from Bio.Alphabet import generic_protein
 from Bio.SeqUtils import seq1
 
 import warnings
@@ -42,7 +41,7 @@ def fasta_from_pdb(pdb: str) -> None:
                     sys.exit("HETATOM followed by ATOM within a chain")
                 else:
                     seq += seq1(residue.get_resname())
-    bio_seq_rec = SeqRecord(Seq.Seq(seq, generic_protein), id=name)
+    bio_seq_rec = SeqRecord(Seq.Seq(seq), id=name)
     SeqIO.write(bio_seq_rec, f'pdb_adjusting/{name}.fasta', "fasta")
 
 def hmmscan(pdb: str) -> None:
